@@ -99,7 +99,7 @@ function makeRandomMove() {
     let possibleMoves = game.moves();
     if (possibleMoves.length === 0) return;
     let randomIdx = Math.floor(Math.random() * possibleMoves.length);
-    console.log(minimaxRoot(3,game, true))
+    console.log(minimaxRoot(2,game, true))
     let move = game.move(minimaxRoot(2,game, true));
 ;    if (move != null) {
         let history = $("#move");
