@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Chessboard Tests</title>
+    <link rel="stylesheet" href="xiangqiboard.css"/>
+    <script src="xiangqi.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <style>
+        .highlight-red {
+            box-shadow: inset 0 0 3px 3px yellow;
+        }
+
+        .highlight-black {
+            box-shadow: inset 0 0 3px 3px blue;
+        }
+        .highlight {
+            box-shadow: inset 0 0 3px 3px #25f44f;
+        }
+
+        th {
+            width: 50px;
+            height: 50px;
+            background: #4d4d4d;
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+<div class="row" >
+    <div class="col-5" style="text-align: center">
+        <table class="mx-auto">
+            <tr>
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+                <th>H</th>
+                <th>I</th>
+            </tr>
+            <tr aria-rowspan="10">
+                <td>
+                    <table>
+                        <tr>
+                            <th>9</th>
+                        </tr>
+                        <tr>
+                            <th>8</th>
+                        </tr>
+                        <tr>
+                            <th>7</th>
+                        </tr>
+                        <tr>
+                            <th>6</th>
+                        </tr>
+                        <tr>
+                            <th>5</th>
+                        </tr>
+                        <tr>
+                            <th>4</th>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                        </tr><tr>
+                            <th>0</th>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="9">
+                    <div id="myBoard" style="width: 450px"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-5" style="text-align: center">
+        <textarea cols="50" rows="25" id="move"></textarea>
+    </div>
+</div>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="xiangqiboard.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
