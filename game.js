@@ -45,8 +45,9 @@ function onDrop(source, target) {
     }
     if (move === null) return 'snapback';
     updateStatus();
-    if(game.turn()==='b'){
-        makeRandomMove();
+    if (game.turn() === 'b') {
+        window.setTimeout(makeRandomMove, 200)
+
     }
 }
 
@@ -99,9 +100,9 @@ function makeRandomMove() {
     let possibleMoves = game.moves();
     if (possibleMoves.length === 0) return;
     let randomIdx = Math.floor(Math.random() * possibleMoves.length);
-    console.log(minimaxRoot(2,game, true))
-    let move = game.move(minimaxRoot(2,game, true));
-;    if (move != null) {
+    let move = game.move(minimaxRoot(3, game, true));
+
+    if (move != null) {
         let history = $("#move");
         history.val(`${history.val()} \n ${move.color}: ${move.from}=>${move.to}`)
         if (history[0].selectionStart === history[0].selectionEnd) {
@@ -118,7 +119,8 @@ function minimaxRoot(depth, game, isMaximisingPlayer) {
     for (let i = 0; i < newGameMoves.length; i++) {
         let newGameMove = newGameMoves[i]
         game.move(newGameMove);
-        let value = minimax(depth - 1, game, !isMaximisingPlayer);
+        let value = minimax(depth - 1, game,-9999, 9999, !isMaximisingPlayer);
+        console.log(1)
         game.undo();
         if (value >= bestMove) {
             bestMove = value;
@@ -128,7 +130,7 @@ function minimaxRoot(depth, game, isMaximisingPlayer) {
     return bestMoveFound;
 }
 
-function minimax(depth, game, isMaximisingPlayer) {
+function minimax(depth, game, alpha, beta, isMaximisingPlayer) {
     if (depth === 0) {
         return -evaluateBoard(game.board());
     }
@@ -137,16 +139,23 @@ function minimax(depth, game, isMaximisingPlayer) {
         let bestMove = -9999;
         for (let i = 0; i < newGameMoves.length; i++) {
             game.move(newGameMoves[i]);
-            bestMove = Math.max(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+            bestMove = Math.max(bestMove, minimax(depth - 1,  game,alpha, beta, !isMaximisingPlayer));
             game.undo();
+            alpha = Math.max(alpha, bestMove);
+            if (beta <= alpha) {
+                return bestMove;
+            }
         }
         return bestMove;
     } else {
         let bestMove = 9999;
         for (let i = 0; i < newGameMoves.length; i++) {
             game.move(newGameMoves[i]);
-            bestMove = Math.min(bestMove, minimax(depth - 1, game, !isMaximisingPlayer));
+            bestMove = Math.min(bestMove, minimax(depth - 1, game,alpha, beta, !isMaximisingPlayer));
             game.undo();
+            beta = Math.min(beta, bestMove);
+            if (beta <= alpha) {  return bestMove; }
+
         }
         return bestMove;
     }
@@ -169,22 +178,21 @@ function getPieceValue(piece, x, y) {
     }
     let getAbsoluteValue = function (piece, isRed, x, y) {
         if (piece.type === 'p') {
-            return 15 + (isRed ? pEvalRed[x][y] : pEvalBlack[x][y]);
+            return 30 + (isRed ? pEvalRed[x][y] : pEvalBlack[x][y]);
         } else if (piece.type === 'r') {
-            return 90 + (isRed ? rEvalRed[x][y] : rEvalBlack[x][y]);
+            return 600 + (isRed ? rEvalRed[x][y] : rEvalBlack[x][y]);
         } else if (piece.type === 'c') {
-            return 45 + (isRed ? cEvalRed[x][y] : cEvalBlack[x][y]);
+            return 285 + (isRed ? cEvalRed[x][y] : cEvalBlack[x][y]);
         } else if (piece.type === 'n') {
-            return 40 + (isRed ? nEvalRed[x][y] : nEvalBlack[x][y]);
-        }
-        else if (piece.type === 'b') {
-            return 20;
+            return 270 + (isRed ? nEvalRed[x][y] : nEvalBlack[x][y]);
+        } else if (piece.type === 'b') {
+            return 120;
             // return 20 + (isRed ? bEvalRed[x][y] : bEvalBlack[x][y]);
         } else if (piece.type === 'a') {
-            return 20;
+            return 120;
             // return 20 + (isRed ? aEvalRed[x][y] : aEvalBlack[x][y]);
         } else if (piece.type === 'k') {
-            return 900;
+            return 6000;
             // return 900 + (isRed ? kEvalRed[x][y] : kEvalBlack[x][y]);
         }
         throw "Unknown piece type: " + piece.type;
@@ -194,28 +202,28 @@ function getPieceValue(piece, x, y) {
 }
 
 let pEvalRed = [
-    [0,  3,  6,  9,  12,  9,  6,  3,  0],
+    [0, 3, 6, 9, 12, 9, 6, 3, 0],
     [18, 36, 56, 80, 120, 80, 56, 36, 18],
     [14, 26, 42, 60, 80, 60, 42, 26, 14],
-    [ 10, 20, 30, 34, 40, 34, 30, 20, 10],
-    [6,  12, 18, 18, 20, 18, 18, 12, 6],
-    [2,  0,  8,  0,  8,  0,  8,  0,  2],
-    [0,  0, -2,  0,  4,  0, -2,  0,  0],
-    [0,  0,  0,  0,  0,  0,  0,  0,  0],
-    [0,  0,  0,  0,  0,  0,  0,  0,  0],
-    [0,  0,  0,  0,  0,  0,  0,  0,  0],
+    [10, 20, 30, 34, 40, 34, 30, 20, 10],
+    [6, 12, 18, 18, 20, 18, 18, 12, 6],
+    [2, 0, 8, 0, 8, 0, 8, 0, 2],
+    [0, 0, -2, 0, 4, 0, -2, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 let pEvalBlack = [
-    [0,  0,  0,  0,  0,  0,  0,  0,  0],
-    [0,  0,  0,  0,  0,  0,  0,  0,  0],
-    [0,  0,  0,  0,  0,  0,  0,  0,  0],
-    [0,  0, -2,  0,  4,  0, -2,  0,  0],
-    [2,  0,  8,  0,  8,  0,  8,  0,  2],
-    [6,  12, 18, 18, 20, 18, 18, 12, 6],
-    [ 10, 20, 30, 34, 40, 34, 30, 20, 10],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, -2, 0, 4, 0, -2, 0, 0],
+    [2, 0, 8, 0, 8, 0, 8, 0, 2],
+    [6, 12, 18, 18, 20, 18, 18, 12, 6],
+    [10, 20, 30, 34, 40, 34, 30, 20, 10],
     [14, 26, 42, 60, 80, 60, 42, 26, 14],
     [18, 36, 56, 80, 120, 80, 56, 36, 18],
-    [0,  3,  6,  9,  12,  9,  6,  3,  0]
+    [0, 3, 6, 9, 12, 9, 6, 3, 0]
 ]
 let rEvalRed = [
     [14, 14, 12, 18, 16, 18, 12, 14, 14],
