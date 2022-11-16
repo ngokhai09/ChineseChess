@@ -33,6 +33,7 @@ function highLight(square) {
 }
 
 function onDrop(source, target) {
+
     removeHighLight()
     let move = game.move({
         from: source,
@@ -47,7 +48,6 @@ function onDrop(source, target) {
     updateStatus();
     if (game.turn() === 'b') {
         window.setTimeout(makeRandomMove, 200)
-
     }
 }
 
@@ -60,7 +60,11 @@ function updateStatus() {
 
     let moveColor = 'Red';
     if (game.turn() === 'b') {
+        $("#turn").css("background-color", "black");
         moveColor = 'Black';
+    }else{
+        $("#turn").css("background-color", "red");
+
     }
 
     // checkmate?
@@ -119,7 +123,7 @@ function minimaxRoot(depth, game, isMaximisingPlayer) {
     for (let i = 0; i < newGameMoves.length; i++) {
         let newGameMove = newGameMoves[i]
         game.move(newGameMove);
-        let value = minimax(depth - 1, game,-9999, 9999, !isMaximisingPlayer);
+        let value = minimax(depth, game,-9999, 9999, !isMaximisingPlayer);
         console.log(1)
         game.undo();
         if (value >= bestMove) {

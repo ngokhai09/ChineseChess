@@ -25,6 +25,7 @@
         .highlight-black {
             box-shadow: inset 0 0 3px 3px blue;
         }
+
         .highlight {
             box-shadow: inset 0 0 3px 3px #25f44f;
         }
@@ -39,8 +40,9 @@
 
 </head>
 <body>
-<div class="row" >
+<div class="row">
     <div class="col-5" style="text-align: center">
+
         <table class="mx-auto">
             <tr>
                 <th></th>
@@ -84,7 +86,8 @@
                         </tr>
                         <tr>
                             <th>1</th>
-                        </tr><tr>
+                        </tr>
+                        <tr>
                             <th>0</th>
                         </tr>
                     </table>
@@ -96,7 +99,14 @@
         </table>
     </div>
     <div class="col-5" style="text-align: center">
-        <textarea cols="50" rows="25" id="move"></textarea>
+        <div class="row">
+            <div class="col-5">
+                <h1>Game Turn</h1>
+                <div id="turn" style="width: 200px; height: 200px"></div>
+            </div>
+            <div class="col-5"><textarea cols="50" rows="25" id="move"></textarea>
+            </div>
+        </div>
     </div>
 </div>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
