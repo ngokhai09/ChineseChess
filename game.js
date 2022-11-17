@@ -113,6 +113,7 @@ function makeRandomMove() {
             history[0].scrollTop = history[0].scrollHeight;
         }
     }
+    $("#turn").css("background-color", "red");
     board.position(game.fen());
 }
 
@@ -191,13 +192,10 @@ function getPieceValue(piece, x, y) {
             return 270 + (isRed ? nEvalRed[x][y] : nEvalBlack[x][y]);
         } else if (piece.type === 'b') {
             return 120;
-            // return 20 + (isRed ? bEvalRed[x][y] : bEvalBlack[x][y]);
         } else if (piece.type === 'a') {
             return 120;
-            // return 20 + (isRed ? aEvalRed[x][y] : aEvalBlack[x][y]);
         } else if (piece.type === 'k') {
             return 6000;
-            // return 900 + (isRed ? kEvalRed[x][y] : kEvalBlack[x][y]);
         }
         throw "Unknown piece type: " + piece.type;
     };
